@@ -9,9 +9,13 @@ io.on("connection", (socket) => {
   console.log("🔌 New user connected! 🔌");
 })
 
+//Express View Engine for Handlebars
 const exphbs  = require('express-handlebars');
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
+
+//Establish public folder
+app.use('/public', express.static('public'))
 
 app.get('/', (req, res) => {
   res.render('index.handlebars');
