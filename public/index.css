@@ -168,7 +168,7 @@ label {
 }
 
 .main-container {
-  display: none;
+  display: flex;
   flex-direction: row;
   width: 100%;
 }
