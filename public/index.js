@@ -12,4 +12,9 @@ $(document).ready(()=>{
     }
   });
 
+  // socket listeners
+  socket.on('new user', (username) => {
+      console.log('✋ ${username} has joined the chat! ✋');
+  })
+
 })
