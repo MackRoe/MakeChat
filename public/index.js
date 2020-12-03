@@ -7,6 +7,7 @@ $(document).ready(()=>{
   // get online users from Server
   socket.emit('get online users');
 
+// Button Handlers
   $('#create-user-btn').click((e)=>{
     e.preventDefault();
     if($('#username-input').val().length > 0){
@@ -31,6 +32,15 @@ $(document).ready(()=>{
       });
       $('#chat-input').val("");
     }
+  });
+  $('#new-channel-btn').click( () => {
+      let newChannel = $('#new-channel-input').val();
+
+      if(newChannel.length > 0){
+        // Emit the new channel to the server
+        socket.emit('new channel', newChannel);
+        $('#new-channel-input').val("");
+      }
   });
 
   //socket listeners

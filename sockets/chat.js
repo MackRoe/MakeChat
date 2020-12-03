@@ -28,4 +28,9 @@ module.exports = (io, socket, onlineUsers) => {
       io.emit('user has left', onlineUsers);
   });
 
+  // register new channel event
+  socket.on('new channel', (newChannel) => {
+      console.log(newChannel);
+  })
+
 }
