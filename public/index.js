@@ -21,6 +21,8 @@ $(document).ready(()=>{
 
   $('#send-chat-btn').click((e) => {
     e.preventDefault();
+    // get the client's channel
+    let channel = $('.channel-current').text();
     // Get the message text value
     let message = $('#chat-input').val();
     // Make sure it's not empty
@@ -29,10 +31,13 @@ $(document).ready(()=>{
       socket.emit('new message', {
         sender : currentUser,
         message : message,
+        // send the channel to Server
+        channel : channel
       });
       $('#chat-input').val("");
     }
   });
+
   $('#new-channel-btn').click( () => {
       let newChannel = $('#new-channel-input').val();
 
@@ -50,12 +55,15 @@ $(document).ready(()=>{
   })
   // output the new message
   socket.on('new message', (data) => {
-      $('.message-container').append(`
-        <div class="message">
-            <p class="message-user">${data.sender}: </p>
-            <p class="message-text">${data.message} </p>
-        </div>
-      `)
+      let currentChannel = $('.channel-current').text();
+      if(currentChannel == data.channel) {
+          $('.message-container').append(`
+            <div class="message">
+                <p class="message-user">${data.sender}: </p>
+                <p class="message-text">${data.message} </p>
+            </div>
+          `);
+        }
       // important note: the ` is a back tik not a single quote '
   })
   socket.on('get online users', (onlineUsers) => {
