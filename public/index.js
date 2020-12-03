@@ -6,6 +6,14 @@ $(document).ready(()=>{
   let currentUser;
   // get online users from Server
   socket.emit('get online users');
+  // user joins general channel by default
+  socket.emit('user changed channel', 'General');
+
+  // change channel by clicking its name
+  $(document).on('click', '.channel', (e)=>{
+      let newChannel = e.target.textContent;
+      socket.emit('user changed channel', newChannel);
+  });
 
 // Button Handlers
   $('#create-user-btn').click((e)=>{
