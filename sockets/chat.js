@@ -1,5 +1,5 @@
 //chat.js
-module.exports = (io, socket, onlineUsers) => {
+module.exports = (io, socket, onlineUsers, channels) => {
 
   socket.on('new user', (username) => {
     // save username as key to access the user's socket id
@@ -31,6 +31,18 @@ module.exports = (io, socket, onlineUsers) => {
   // register new channel event
   socket.on('new channel', (newChannel) => {
       console.log(newChannel);
+      // save newChannel to channels
+      channels[newChannel] = [];
+      // socket joins new channel room
+      socket.join(newChannel);
+      // informs clients of new channel
+      io.emit('new channel', newChannel);
+      // emit that new channel has been made to client
+      // changes channel to the new one
+      socket.emit('user changed channel', {
+          channel : newChannel,
+          messages : channels[newChannel]
+      });
   })
 
 }
