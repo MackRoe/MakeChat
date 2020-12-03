@@ -53,7 +53,15 @@ $(document).ready(()=>{
   //Our usernames are keys in the object of onlineUsers.
   for(username in onlineUsers){
     $('.users-online').append(`<div class="user-online">${username}</div>`);
-  }
-})
+    }
+  });
+
+  //refresh the online user list
+  socket.on('user has left', (onlineUsers) => {
+      $('.users-online').empty();
+      for(username in onlineUsers) {
+          $('.users-online').append(`<p>${username}</p>`);
+      }
+  });
 
 })

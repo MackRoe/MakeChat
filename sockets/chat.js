@@ -22,4 +22,10 @@ module.exports = (io, socket, onlineUsers) => {
       socket.emit('get online users', onlineUsers);
   })
 
+  // removes a user who has closed the chat window
+  socket.on('disconnect', () => {
+      delete onlineUsers[socket.username]
+      io.emit('user has left', onlineUsers);
+  });
+
 }
