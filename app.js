@@ -5,9 +5,13 @@ const server = require('http').Server(app);
 
 //Socket.io
 const io = require('socket.io')(server);
+// store online Users
+let onlineUsers = {};
 io.on("connection", (socket) => {
+
   console.log("🔌 New user connected! 🔌");
-  require('./sockets/chat.js')(io, socket);
+  // send users to chat file
+  require('./sockets/chat.js')(io, socket, onlineUsers);
 })
 
 //Express View Engine for Handlebars

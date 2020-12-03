@@ -4,6 +4,8 @@ $(document).ready(()=>{
 
   //Keep track of the current user
   let currentUser;
+  // get online users from Server
+  socket.emit('get online users');
 
   $('#create-user-btn').click((e)=>{
     e.preventDefault();
@@ -44,6 +46,14 @@ $(document).ready(()=>{
             <p class="message-text">${data.message} </p>
         </div>
       `)
+      // important note: the ` is a back tik not a single quote '
   })
+  socket.on('get online users', (onlineUsers) => {
+  //You may have not have seen this for loop before. It's syntax is for(key in obj)
+  //Our usernames are keys in the object of onlineUsers.
+  for(username in onlineUsers){
+    $('.users-online').append(`<div class="user-online">${username}</div>`);
+  }
+})
 
 })
